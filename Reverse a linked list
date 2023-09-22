@@ -1,0 +1,32 @@
+class Solution1 {
+public:
+/*iterative approach using 3 pointers. O(n) time and O(1) space*/
+    ListNode* reverseList(ListNode* head) {
+         ListNode* prev=NULL;
+         ListNode* curr=head;
+         ListNode* fo=head;
+         while(curr!=NULL)
+         {
+             fo=curr->next;
+             curr->next=prev;
+             prev=curr;
+             curr=fo;
+         }
+         return prev;
+    }
+};
+class Solution2 {
+public:
+/*non tail recursive approach. */
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL||head->next==NULL)
+        return head;
+        else
+        {
+        ListNode* newh=  reverseList(head->next);
+        head->next->next=head;
+        head->next=NULL;
+        return newh;
+        }
+    }
+};
