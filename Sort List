@@ -1,0 +1,94 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+//Merge Sort Approach
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+      ListNode* temp= new ListNode(-1);
+      ListNode *head=temp;
+      while(list1!=NULL &&list2!=NULL)
+      {
+          if(list1->val<list2->val)
+          {
+              temp->next=list1;
+              list1=list1->next;
+          }
+          else
+          {
+          temp->next=list2;
+          list2=list2->next;
+      } 
+      temp=temp->next; 
+      }
+      while(list1!=NULL)
+      {
+            temp->next=list1;
+             list1=list1->next;
+             temp=temp->next;
+
+      }
+      while(list2!=NULL)
+      {
+        temp->next=list2;
+          list2=list2->next;
+          temp=temp->next;
+      }
+      temp->next=NULL;
+      return head->next;
+    }
+    ListNode* middleNode(ListNode* head) {
+     ListNode* slow=head;
+     ListNode* fast=head;  
+     if(head==NULL)
+     return NULL;
+     if(head->next==NULL)
+     return head;
+     while(fast!=NULL&&fast->next!=NULL)
+     {
+         fast=fast->next->next;
+         slow=slow->next;
+     } 
+     while(head->next!=slow)
+     head=head->next;
+     head->next=NULL;
+     return slow;
+    }
+    ListNode* sortList(ListNode* head) {
+        if(head==NULL||head->next==NULL)
+        return head;
+        ListNode* hsh=middleNode(head);
+        auto left=sortList(head);
+        auto right=sortList(hsh);
+        return mergeTwoLists(left,right);
+    }
+};
+
+
+//insertion sort approach (complexity:n^2) and would give TLE
+ListNode* sortList(ListNode* head) {
+ListNode* ans=new ListNode(-1);
+       ListNode* ptr=head;
+       ListNode* dummy=ans;
+       while(ptr!=nullptr){
+           while(ans->next!=nullptr&&ans->next->val<ptr->val){
+               ans=ans->next;
+           }
+           ListNode* temp=ans->next;
+           ans->next=ptr;
+           ListNode* temp2=ptr->next;
+           ptr->next=temp;
+
+           ptr=temp2;
+           ans=dummy;
+       }
+       return dummy->next;
+    }
+};
