@@ -1,0 +1,70 @@
+
+
+//using sorting
+//time complexity:O(nlogn)
+class Solution1{
+public:
+    bool isAnagram(string s, string t) {
+        sort(s.begin(),s.end());
+        sort(t.begin(),t.end());
+        return s==t;
+    }
+};
+
+//using 2 hashmap
+class Solution2 {
+public:
+    bool isAnagram(string s, string t) {
+        map<char,int>m1;
+        map<char,int>m2;
+        for(int i=0;i<s.length();i++)
+        m1[s[i]]++;
+       for(int i=0;i<t.length();i++)
+        m2[t[i]]++;
+        return m1==m2;
+    }
+};
+
+
+//using 1 hashmap
+class Solution3 {
+public:
+    bool isAnagram(string s, string t) {
+        map<char,int>m1;
+        for(int i=0;i<s.length();i++)
+        m1[s[i]]++;
+       for(int i=0;i<t.length();i++)
+        m1[t[i]]--;
+       for(auto j:m1)
+       {
+       if(j.second!=0)
+        return false;
+       }
+        return true;
+    }
+};
+
+//using frequency array of length 26
+
+class Solution4 {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length()) {//if of different lengths they cannot be anagram
+            return false;
+        }
+        
+        vector<int> freq(26, 0);
+        for (int i = 0; i < s.length(); i++) {
+            freq[s[i] - 'a']++;
+            freq[t[i] - 'a']--;
+        }
+        
+        for (int i = 0; i < freq.size(); i++) {
+            if (freq[i] != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};
