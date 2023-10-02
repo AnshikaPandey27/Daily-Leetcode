@@ -1,0 +1,69 @@
+//Time Complexity: O(n^2) Gives TLE
+//Brute force approach 
+class Solution1{
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        for(int i=0;i<nums.size()-1;i++)
+        {
+            for(int j=i+1;j<nums.size();j++)
+            {
+                if(nums[i]==nums[j])
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+
+
+//Time Complexity: O(nlogn)
+//sorting technique
+class Solution2 {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size()-1;i++)
+        {
+            if(nums[i]==nums[i+1])
+            return true;
+        }
+        return false;
+            }
+};
+
+
+//Time coplexity:O(nlog n) and O(n) space
+//set is used
+class Solution3 {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        //unordered_set<int>s;
+        //for(auto i: nums)
+        //s.insert(i);
+        auto j=set<int>(nums.begin(),nums.end()).size();
+        if(nums.size()==j)
+        //if(nums.size()==s.size())
+        return false;
+        else 
+        return true;
+    }
+};
+
+
+// Time complexity:O(n) and space:O(n)
+//using hashmap to check frequency
+class Solution4 {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_map<int,int>mp;
+        for(auto i:nums)
+        mp[i]++;
+        for(auto i:mp)
+        {
+            if(i.second>=2)
+            return true;
+        }
+        return false;
+    }
+};
